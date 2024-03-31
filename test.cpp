@@ -1,4 +1,4 @@
-void PrintVector(vector< int > v) {
+void PrintVector(vector<int>v) {
   cout << "{ ";
   for (auto item : v) {
     cout << item << " ";

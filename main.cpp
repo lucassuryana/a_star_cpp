@@ -24,17 +24,19 @@ vector<int> ParseLine(string line_value) {
     return row;
 }
 
-void ReadBoardFile(string file_name) {
-    ifstream my_file(file_name);
-    if (my_file) {
-        string line;
-        while (getline(my_file, line))
-        {
-            cout << line << "\n";
-        }
-        
-    }
+vector<vector<int>> ReadBoardFile(string path) {
+  ifstream myfile (path);
+  vector<vector<int>> board;
+  vector<int> row;
 
+  if (myfile) {
+    string line;
+    while (getline(myfile, line)) {
+      row = ParseLine(line);
+      board.push_back(row);        
+    }
+  }
+  return board;
 }
 
 void PrintBoard(const vector< vector<int> > board) {
@@ -49,6 +51,7 @@ void PrintBoard(const vector< vector<int> > board) {
 #include "test.cpp"  // for testing
 
 int main() {
-    ReadBoardFile("1.board");
-    TestParseLine();
+    vector<vector<int>> board;
+    board = ReadBoardFile("1.board");
+    PrintBoard(board);
 }
