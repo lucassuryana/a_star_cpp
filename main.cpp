@@ -10,6 +10,8 @@ using std::vector;
 using std::ifstream;
 using std::istringstream;
 
+enum class State {kEmpty, kObstacle};
+
 vector<int> ParseLine(string line_value) {
     vector<int> row;
     istringstream sline(line_value);
@@ -37,6 +39,15 @@ vector<vector<int>> ReadBoardFile(string path) {
     }
   }
   return board;
+}
+
+string CellString(State cell) {
+	if (cell == State::kObstacle) {
+    	return "⛰️ ";git
+    }
+  	else {
+    	return "0 ";
+    }
 }
 
 void PrintBoard(const vector< vector<int> > board) {
