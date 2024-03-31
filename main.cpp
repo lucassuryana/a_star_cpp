@@ -2,11 +2,27 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 using std::cout;
 using std::string;
 using std::vector;
 using std::ifstream;
+using std::istringstream;
+
+vector<int> ParseLine(string line_value) {
+    vector<int> row;
+    istringstream sline(line_value);
+
+    char c;
+    int n;
+
+    // while sline is an integer then character, push integer to row
+    while (sline >> n >> c) {
+        row.push_back(n);
+    }
+    return row;
+}
 
 void ReadBoardFile(string file_name) {
     ifstream my_file(file_name);
@@ -30,6 +46,9 @@ void PrintBoard(const vector< vector<int> > board) {
     }
 }
 
+#include "test.cpp"  // for testing
+
 int main() {
-    return 0;
+    ReadBoardFile("1.board");
+    TestParseLine();
 }
