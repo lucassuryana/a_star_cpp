@@ -12,20 +12,6 @@ using std::istringstream;
 
 enum class State {kEmpty, kObstacle};
 
-vector<int> ParseLine(string line_value) {
-    vector<int> row;
-    istringstream sline(line_value);
-
-    char c;
-    int n;
-
-    // while sline is an integer then character, push integer to row
-    while (sline >> n >> c) {
-        row.push_back(n);
-    }
-    return row;
-}
-
 vector<State> ParseLine(string line) {
     istringstream sline(line);
     int n;
@@ -40,6 +26,19 @@ vector<State> ParseLine(string line) {
       }
     }
     return row;
+}
+
+vector<vector<State>> ReadBoardFile(string path) {
+  ifstream myfile (path);
+  vector<vector<State>> board{};
+  if (myfile) {
+    string line;
+    while (getline(myfile, line)) {
+      vector<State> row = ParseLine(line);
+      board.push_back(row);
+    }
+  }
+  return board;
 }
 
 string CellString(State cell) {
