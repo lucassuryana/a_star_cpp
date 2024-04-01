@@ -26,24 +26,25 @@ vector<int> ParseLine(string line_value) {
     return row;
 }
 
-vector<vector<int>> ReadBoardFile(string path) {
-  ifstream myfile (path);
-  vector<vector<int>> board;
-  vector<int> row;
-
-  if (myfile) {
-    string line;
-    while (getline(myfile, line)) {
-      row = ParseLine(line);
-      board.push_back(row);        
+vector<State> ParseLine(string line) {
+    istringstream sline(line);
+    int n;
+    char c;
+    vector<State> row;
+    while (sline >> n >> c && c == ',') {
+      if (n == 0) {
+      	row.push_back(State::kEmpty);
+      }
+      else {
+      	row.push_back(State::kObstacle);
+      }
     }
-  }
-  return board;
+    return row;
 }
 
 string CellString(State cell) {
 	if (cell == State::kObstacle) {
-    	return "⛰️ ";git
+    	return "⛰️ ";
     }
   	else {
     	return "0 ";
