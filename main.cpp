@@ -50,19 +50,16 @@ string CellString(State cell) {
     }
 }
 
-void PrintBoard(const vector< vector<int> > board) {
-    for (int i=0; i < board.size(); i++) {
-        for (int j = 0; j < board[i].size(); j++) {
-            cout << board[i][j];
-        }
-        cout << "\n";
+void PrintBoard(const vector<vector<State>> board) {
+  for (int i = 0; i < board.size(); i++) {
+    for (int j = 0; j < board[i].size(); j++) {
+      cout << CellString(board[i][j]);
     }
+    cout << "\n";
+  }
 }
 
-#include "test.cpp"  // for testing
-
 int main() {
-    vector<vector<int>> board;
-    board = ReadBoardFile("1.board");
+    auto board = ReadBoardFile("1.board");
     PrintBoard(board);
 }
