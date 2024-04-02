@@ -16,6 +16,9 @@ using std::sort;
 // Define states for grid cells
 enum class State {kEmpty, kObstacle, kClosed, kPath};
 
+// Define directional deltas
+const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+
 // Function to parse a line from the board file and create a row vector
 vector<State> ParseLine(string line) {
     istringstream sline(line);
@@ -87,6 +90,27 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &open_nodes, vect
     grid[x][y] = State::kClosed;
 }
 
+void ExpandNeighbors(const vector<int> &current, int goal[2], vector<vector<int>> &open_nodes, vector<vector<State>> &grid) {
+    // Get current node's data
+    int x = current[0];
+    int y = current[1];
+    int g = current[2];
+    
+    // Loop through current node's potential neighbor
+    for (int i = 0; i < 4; i++) {
+      int neighbor_x = x + delta[i][0];
+      int neighbor_y = y + delta[i][1];
+
+      // Check that the potential neighbor are on the grid and not closed
+      if (CheckValidCell(neighbor_x, neighbor_y, grid)){
+        g = g + 1;
+        int h = Heuristic(neighbor_x, neighbor_y, goal[0], goal[1]);
+        AddToOpen(neighbor_x, neighbor_y, g, h, open_nodes, grid);
+      }
+
+    }
+}
+
 // Function to perform A* search algorithm
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
     // Initialize open_node
@@ -125,6 +149,8 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
 string CellString(State cell) {
     if (cell == State::kObstacle) {
         return "⛰️ "; // Mountain emoji for obstacles
+    } else if (cell == State::kPath) {
+      return "🚗  "; // Vehicle emoji for self-driving car
     } else {
         return "0 "; // Empty cell
     }
