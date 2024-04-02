@@ -23,12 +23,14 @@ To run the code:
 
 ### Results
 1. If we choose the start node is grid (0,0) and the goal node is grid (4,5), we will get the result as follows:
+
 🚦  ⛰️   0   0   0   0   
 🚗  ⛰️   0   0   0   0   
 🚗  ⛰️   0   0   0   0   
 🚗  ⛰️   0   🚗  🚗  🚗  
 🚗  🚗   🚗  🚗  ⛰️  🏁 
 2. If we choose the start node is grid (0,0) and the goal node is grid (0,4), we will get the result as follows:
+
 🚦  ⛰️   0   0   🏁  0   
 🚗  ⛰️   0   0   🚗  0   
 🚗  ⛰️   0   0   🚗  0   
