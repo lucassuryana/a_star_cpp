@@ -156,9 +156,9 @@ string CellString(State cell) {
     } else if (cell == State::kPath) {
         return "🚗  "; // Vehicle emoji for self-driving car
     } else if (cell == State::kStart) {
-        return "🚦 "; // Start emoji
+        return "🚦  "; // Start emoji
     } else if (cell == State::kFinish) {
-        return "🏁 "; // Goal emoji
+        return "🏁  "; // Goal emoji
     } else {
         return "0   ";
     }
@@ -177,7 +177,7 @@ void PrintBoard(const vector<vector<State>> board) {
 
 int main() {
     int init[2]{0, 0}; // Initial position
-    int goal[2]{4, 5}; // Goal position
+    int goal[2]{0, 4}; // Goal position
     auto board = ReadBoardFile("1.board"); // Read board from file
     auto solution = Search(board, init, goal); // Search for path
     PrintBoard(solution); // Print the solution path or the original board if no path found
