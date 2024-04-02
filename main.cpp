@@ -70,6 +70,15 @@ int Heuristic(int x1, int y1, int x2, int y2) {
     return abs(x2 - x1) + abs(y2 - y1);
 }
 
+// Function to check if the cell is on the grid and not an obstacle (i.e., equals kEmpty)
+bool CheckValidCell(int x, int y, vector<vector<State>> grid){
+  if (grid[x][y] == State::kEmpty) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // Function to add a node to the open list
 void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &open_nodes, vector<vector<State>> &grid) {
     vector<int> node {x, y, g, h};
@@ -102,15 +111,10 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
       int current_y = current_node[1];
       // Set grid[x][y] to kPath
       grid[current_x][current_y] = State::kPath;
+      // Check if the end goal has been reached. If yes, return grid
       if (current_x == goal[0] && current_y == goal[1]) {
         return grid;
       }
-
-
-
-
-
-
     }
 
     cout << "No path found!" << "\n";
