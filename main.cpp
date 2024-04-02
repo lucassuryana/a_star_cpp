@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9,9 +10,11 @@ using std::string;
 using std::vector;
 using std::ifstream;
 using std::istringstream;
+using std::abs;
+using std::sort;
 
 // Define states for grid cells
-enum class State {kEmpty, kObstacle, kClosed};
+enum class State {kEmpty, kObstacle, kClosed, kPath};
 
 // Function to parse a line from the board file and create a row vector
 vector<State> ParseLine(string line) {
@@ -50,9 +53,16 @@ vector<vector<State>> ReadBoardFile(string path) {
 
 // Function to compare two nodes
 bool Compare(vector<int> node_one, vector<int> node_two) {
-  int f1 = node_one[2] + node_one[3];
-  int f2 = node_two[2] + node_two[3];
+  // node structure is {x, y, g, h}
+  int f1 = node_one[2] + node_one[3]; // f1 = g1 + h1
+  int f2 = node_two[2] + node_two[3]; // f2 = g2 + h2
   return f1 > f2;
+}
+
+// Function to sort two dimensional vector of ints in descending order
+// -> and * related to C++ pointers
+void CellSort(vector<vector<int>> *v) {
+  sort(v->begin(), v->end(), Compare);
 }
 
 // Function to calculate Manhattan distance heuristic
@@ -79,6 +89,29 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
     int h = Heuristic(x, y, goal[0], goal[1]);
     // Add first node to open vector using AddToOpen
     AddToOpen(x, y, g, h, open, grid);
+
+    while (!open.empty()) {
+      // Sort open list
+      CellSort(&open);
+      // Get the last node from open vector
+      vector<int> current_node = open.back();
+      // Remove the last node
+      open.pop_back();
+      // Get x and y values from current_node
+      int current_x = current_node[0];
+      int current_y = current_node[1];
+      // Set grid[x][y] to kPath
+      grid[current_x][current_y] = State::kPath;
+      if (current_x == goal[0] && current_y == goal[1]) {
+        return grid;
+      }
+
+
+
+
+
+
+    }
 
     cout << "No path found!" << "\n";
     return std::vector<vector<State>> {};
