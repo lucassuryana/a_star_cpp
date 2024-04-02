@@ -48,6 +48,13 @@ vector<vector<State>> ReadBoardFile(string path) {
     return board;
 }
 
+// Function to compare two nodes
+bool Compare(vector<int> node_one, vector<int> node_two) {
+  int f1 = node_one[2] + node_one[3];
+  int f2 = node_two[2] + node_two[3];
+  return f1 > f2;
+}
+
 // Function to calculate Manhattan distance heuristic
 int Heuristic(int x1, int y1, int x2, int y2) {
     return abs(x2 - x1) + abs(y2 - y1);
