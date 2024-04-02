@@ -14,7 +14,7 @@ using std::abs;
 using std::sort;
 
 // Define states for grid cells
-enum class State {kEmpty, kObstacle, kClosed, kPath};
+enum class State {kEmpty, kObstacle, kClosed, kPath, kStart, kFinish};
 
 // Define directional deltas
 const int delta[4][2]{{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
@@ -137,6 +137,8 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
       grid[current_x][current_y] = State::kPath;
       // Check if the end goal has been reached. If yes, return grid
       if (current_x == goal[0] && current_y == goal[1]) {
+        grid[init[0]][init[1]] = State::kStart;
+        grid[goal[0]][goal[1]] = State::kFinish;
         return grid;
       }
 
@@ -152,9 +154,13 @@ string CellString(State cell) {
     if (cell == State::kObstacle) {
         return "⛰️   "; // Mountain emoji for obstacles
     } else if (cell == State::kPath) {
-      return "🚗  "; // Vehicle emoji for self-driving car
+        return "🚗  "; // Vehicle emoji for self-driving car
+    } else if (cell == State::kStart) {
+        return "🚦 "; // Start emoji
+    } else if (cell == State::kFinish) {
+        return "🏁 "; // Goal emoji
     } else {
-        return "0   "; // Empty cell
+        return "0   ";
     }
 }
 
