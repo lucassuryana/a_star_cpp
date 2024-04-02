@@ -29,6 +29,7 @@ To run the code:
 🚗  ⛰️   0   0   0   0   
 🚗  ⛰️   0   🚗  🚗  🚗  
 🚗  🚗   🚗  🚗  ⛰️  🏁 
+
 2. If we choose the start node is grid (0,0) and the goal node is grid (0,4), we will get the result as follows:
 
 🚦  ⛰️   0   0   🏁  0   
