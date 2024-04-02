@@ -14,7 +14,7 @@ This project consists of two files:
 * `1.board`: This data is the grid map of the environment.
 * `main.cpp`: This code reads the map of the environment, calculate the shortest path from the start node to the goal node, and visualize the map and the shortest path.
 
-![GitHub Logo](a_star.png)
+![GitHub Logo](a_star.jpg)
 
 ### Run the code
 To run the code:
