@@ -63,6 +63,16 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &open_nodes, vect
 
 // Function to perform A* search algorithm
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
+    // Initialize open_node
+    vector<vector<int>> open {};
+    // Initialize variables for starting node
+    int x = init[0];
+    int y = init[1];
+    int g = 0;
+    int h = Heuristic(x, y, goal[0], goal[1]);
+    // Add first node to open vector using AddToOpen
+    AddToOpen(x, y, g, h, open, grid);
+
     cout << "No path found!" << "\n";
     return std::vector<vector<State>> {};
 }
