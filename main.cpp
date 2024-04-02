@@ -55,7 +55,7 @@ vector<vector<State>> ReadBoardFile(string path) {
 }
 
 // Function to compare two nodes
-bool Compare(vector<int> node_one, vector<int> node_two) {
+bool Compare(const vector<int> node_one, const vector<int> node_two) {
   // node structure is {x, y, g, h}
   int f1 = node_one[2] + node_one[3]; // f1 = g1 + h1
   int f2 = node_two[2] + node_two[3]; // f2 = g2 + h2
@@ -74,12 +74,12 @@ int Heuristic(int x1, int y1, int x2, int y2) {
 }
 
 // Function to check if the cell is on the grid and not an obstacle (i.e., equals kEmpty)
-bool CheckValidCell(int x, int y, vector<vector<State>> grid){
-  if (grid[x][y] == State::kEmpty) {
-    return true;
-  } else {
-    return false;
-  }
+bool CheckValidCell(int x, int y, vector<vector<State>> &grid){
+  bool on_grid_x = (x >= 0 && x < grid.size());
+  bool on_grid_y = (y >= 0 && y < grid[0].size());
+  if (on_grid_x && on_grid_y)
+    return grid[x][y] == State::kEmpty;
+  return false;
 }
 
 // Function to add a node to the open list
@@ -103,9 +103,9 @@ void ExpandNeighbors(const vector<int> &current, int goal[2], vector<vector<int>
 
       // Check that the potential neighbor are on the grid and not closed
       if (CheckValidCell(neighbor_x, neighbor_y, grid)){
-        g = g + 1;
-        int h = Heuristic(neighbor_x, neighbor_y, goal[0], goal[1]);
-        AddToOpen(neighbor_x, neighbor_y, g, h, open_nodes, grid);
+        int g2 = g + 1;
+        int h2 = Heuristic(neighbor_x, neighbor_y, goal[0], goal[1]);
+        AddToOpen(neighbor_x, neighbor_y, g2, h2, open_nodes, grid);
       }
 
     }
@@ -139,6 +139,8 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
       if (current_x == goal[0] && current_y == goal[1]) {
         return grid;
       }
+
+      ExpandNeighbors(current_node, goal, open, grid);
     }
 
     cout << "No path found!" << "\n";
@@ -148,11 +150,11 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
 // Function to convert cell state to string for printing
 string CellString(State cell) {
     if (cell == State::kObstacle) {
-        return "⛰️ "; // Mountain emoji for obstacles
+        return "⛰️   "; // Mountain emoji for obstacles
     } else if (cell == State::kPath) {
       return "🚗  "; // Vehicle emoji for self-driving car
     } else {
-        return "0 "; // Empty cell
+        return "0   "; // Empty cell
     }
 }
 
